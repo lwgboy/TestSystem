@@ -1,0 +1,46 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page import="com.pro.domain.Student"%>
+<%@page import="com.pro.service.StudentService"%>
+<%@page import="com.pro.service.StudentServiceImpl"%>
+<%@page import="com.pro.service.UnitService"%>
+<%@page import="com.pro.service.UnitServiceImpl"%>
+<%@page import="java.util.List"%>
+<%@page import="com.pro.domain.Unit"%>
+<%@page import="com.pro.service.StuQuestionScoreService"%>
+<%@page import="com.pro.service.StuQuestionScoreServiceImpl"%>
+<%@page import="com.pro.domain.StuQuestionScore"%>
+<%@page import="com.pro.service.UnitQuestionScoreServiceImpl"%>
+<%@page import="com.pro.service.UnitQuestionScoreService"%>
+<%@page import="com.pro.domain.Question"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Map"%>
+ 
+<%
+	Student stu = (Student)session.getAttribute("stu");
+	String stuId = stu.getStuId();
+	StuQuestionScore stuQuestionScore = new StuQuestionScore();
+	stuQuestionScore.setStudent(new Student(stuId));
+	
+	String unitId = request.getParameter("unitId");
+	UnitService unitService = new UnitServiceImpl();
+	Unit unit = unitService.findSingleUnit(unitId);
+	
+
+	StuQuestionScoreService stuQuestionScoreService = new StuQuestionScoreServiceImpl();
+	StuQuestionScore sqs = stuQuestionScoreService.findStuQSSingle(stuQuestionScore);
+	
+	//查unit的题目
+	UnitQuestionScoreService UnitQuestionScoreService = new UnitQuestionScoreServiceImpl();
+	Map<String,Object> maps = UnitQuestionScoreService.findUnitQuestionScore(unitId);
+	session.setAttribute("maps",maps);
+	
+	String path = "exit.jsp";
+	if(sqs==null){
+		path = "test.jsp";
+		session.setAttribute("unit",unit);
+	}
+	
+	response.sendRedirect(path);
+
+%>

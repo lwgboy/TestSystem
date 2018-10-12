@@ -1,0 +1,65 @@
+package com.pro.util;
+
+import java.util.List;
+
+public class PageModel<T> {
+	private int currentPage;
+	private int pageSize;
+	private List<T> List;
+	private int totalRecord;
+	
+	public int getCurrentPage() {
+		return currentPage;
+	}
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+	public int getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+	public List<T> getList() {
+		return List;
+	}
+	public void setList(List<T> list) {
+		List = list;
+	}
+	public int getTotalRecord() {
+		return totalRecord;
+	}
+	public void setTotalRecord(int totalRecord) {
+		this.totalRecord = totalRecord;
+	}
+	
+	public int getTotalPage(){
+		return (this.getTotalRecord()+this.getPageSize()-1)/this.getPageSize();
+	}
+	
+	public int firstPage(){
+		return 1;
+	}
+	
+	public int lastPage(){
+		return this.getTotalPage();
+	}
+	
+	public int pageUp(){
+		if(this.getCurrentPage()<=1){
+			return 1;
+		}
+		return this.getCurrentPage()-1;
+	}
+	
+	public int pageDown(){
+		if(this.getCurrentPage()>=this.getTotalPage()){
+			if(this.getTotalRecord()==0){
+				return 1;
+			}
+			return this.getTotalPage();
+		}
+		return this.getCurrentPage()+1;
+	}
+
+}

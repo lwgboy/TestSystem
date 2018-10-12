@@ -1,0 +1,13 @@
+package com.pro.service;
+
+import java.sql.Connection;
+import java.util.List;
+
+import com.pro.domain.Unit;
+
+public interface UnitService {
+	
+	public void insertUnit(Unit unit);
+	public List<Unit> findAllUnit();
+
+}

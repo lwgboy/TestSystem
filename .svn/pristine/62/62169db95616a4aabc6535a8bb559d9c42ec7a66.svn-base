@@ -1,0 +1,15 @@
+package com.pro.dao;
+
+import java.sql.Connection;
+import java.util.List;
+
+import com.pro.domain.Student;
+
+public interface StudentDao {
+
+	public void addStudent(Connection conn,Student student) throws Exception;
+	public void deleteStudent(Connection conn,int studentId) throws Exception;
+	public void updateStudent(Connection conn,Student student) throws Exception;
+	public Student findStudentSingle(Connection conn,Student student) throws Exception;
+	public List<Student> findStudentAll(Connection conn) throws Exception;
+}

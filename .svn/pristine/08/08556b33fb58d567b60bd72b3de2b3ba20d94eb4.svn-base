@@ -1,0 +1,40 @@
+package com.pro.dao;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+
+import com.pro.domain.Teacher;
+
+public class TeacherDaoImpl extends BaseDao implements TeacherDao {
+
+	@Override
+	public void insertTea(Connection conn, Teacher teacher) throws Exception {
+		String sql = "insert into teacher(teaId,teaName,teaPwd) values(SeqId.NEXTVAL,?,?)";
+		Object[] param = {teacher.getTeaId(),teacher.getTeaName(),teacher.getTeaPwd()};
+		this.exeSql(conn, sql, param);
+	}
+
+	@Override
+	public void deleteTea(Connection conn, int teaId) throws Exception {
+		String sql = "delete from teacher where teaId=?";
+		Object[] param = {teaId};
+		this.exeSql(conn, sql, param);
+	}
+
+	@Override
+	public Teacher getTea(Connection conn, int teaId, String teaPwd)
+			throws Exception {
+		String sql = "select * from teacher where teaId=? and teaPwd=?";
+		Object[] param = {teaId,teaPwd};
+		ResultSet rs = this.getRs(conn, sql, param);
+		Teacher teacher = null;
+		if(rs.next()){
+			teacher = new Teacher();
+			teacher.setTeaId(rs.getInt("teaId"));
+			teacher.setTeaName(rs.getString("teaName"));
+			teacher.setTeaPwd(rs.getString("teaPwd"));
+		}
+		return teacher;
+	}
+
+}

@@ -1,0 +1,132 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
+<%@page import="com.pro.domain.Question"%>
+<%@page import="com.pro.domain.Unit"%>
+<%@page import="com.pro.domain.Student"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>学生测试页</title>
+<script type="text/javascript" src="../../js/json2.js"></script>
+</head>
+<%
+	List<Question> questionList = (List<Question>)request.getAttribute("questionList");
+	Unit unit= (Unit)request.getAttribute("unit");
+	Student student = (Student)session.getAttribute("stu");
+%>
+<body>
+	<TABLE align="center" width="50%">  
+		<tr>
+			<td align="center" width="100%">
+				<h3><%=unit.getUnitName() %></h3>
+				<input type="hidden" name="unitId" id="unitId" value="<%=unit.getUnitId() %>" />
+			</td>
+		</tr>
+		<tr>
+			<td align="right">
+				学生：<%=student.getStuId() %>:<%=student.getStuName() %>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="hidden" name="stuId" id="stuId" value="<%=student.getStuId() %>" />
+			</td>
+		</tr>
+	</TABLE>
+	
+<%
+	for(int i=0;i<questionList.size();i++){
+		Question question =	questionList.get(i);
+%>	
+	<form action="#" method="post" name="frm" id="frm">
+		 <table width="70%" align="center">
+		 	<tr>
+		 		<td width="5%" bgcolor="red" align="center">
+		 			<%=question.getQuestionId() %>
+		 			<input type="hidden" name="questionId" id="questionId<%=i %>" value="<%=question.getQuestionId() %>" />
+		 		</td>
+		 		<td width="95%">
+		 			<%=question.getQuestionValue() %>(<%=question.getScore() %>分)
+		 		</td>
+		 	</tr>
+		 	<tr>
+			 	<td colspan="2">
+			       <textarea style="width: 100%; height: 50px;" name="answerValue" id="answerValue<%=i %>"></textarea>
+			    </td>
+		    </tr>
+		    <tr>
+			 	<td colspan="2" align="center">
+			       	<input type="button" onclick="f(<%=i %>);" value="确认" />
+			       	<label id="11<%=i %>" style="display:block"><font color="red">未提交（提交答案请点击确认）</font></label>
+			       	<label id="22<%=i %>" style="display:none"><font color="green">已提交！（修改请重新编辑答案后再次点击确认）</font></label>
+			    </td>
+		    </tr>
+	     </table>
+     </form>
+<%		
+	}
+%>
+
+	<br/><br/><br/><br/>
+	<table align="center">
+		<tr align=center>
+			<td>
+				<input type="button" value="返回" onclick="history.go(-1);return false;" />
+				<label  style="display:block"><font color="red">谨慎操作，点击即退出，退出后不可再次测试本单元！</font></label>
+			</td>
+		</tr>
+	</table>
+	
+</body>
+<script type="text/javascript">
+	var xmlHttp;
+	
+	function createXMLHttpRequest(){
+		if(window.ActiveXObject){
+			xmlHttp = new ActiveXObject("Microsoft.XMLHtp");
+		}else{
+			xmlHttp = new XMLHttpRequest();
+		}
+	}
+	
+	function formData(answerValue,v){
+		var unitId = document.getElementById("unitId").value;
+		var stuId = document.getElementById("stuId").value;
+		var questionId = document.getElementById("questionId"+v).value;
+		var stuQuestionScore={
+  			"unitId":unitId,
+  			"stuId":stuId,
+  			"questionId":questionId,
+  			"answerValue":answerValue
+  			};
+		var stuQuestionScoreStr="stuQuestionScore="+JSON.stringify(stuQuestionScore);
+		//alert(stuQuestionScoreStr);
+		return stuQuestionScoreStr;
+	}
+	
+	function f(v){
+		var answerValue = document.getElementById("answerValue"+v).value;
+		if(answerValue==""||answerValue==null){
+			alert('答案为空！');
+			document.getElementById("answerValue"+v).focus();
+			document.getElementById("answerValue"+v).style.borderColor='red';
+			return;
+		}
+		
+		document.getElementById("11"+v).style.display="none";
+  		document.getElementById("22"+v).style.display="block";
+		
+		createXMLHttpRequest();
+		xmlHttp.open("post","doTestAjax.jsp",true);
+		xmlHttp.onreadystatechange=readyStateChange;
+  		xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+  		//发送数据
+  		xmlHttp.send(formData(answerValue,v));
+		
+	}
+
+	function readyStateChange(){
+  		if(xmlHttp.readyState==4&&xmlHttp.status==200){
+  			
+  		}
+  	}
+</script>
+</html>

@@ -1,0 +1,67 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<html>
+  <head>   
+    <title></title>
+    <style type="text/css">
+  		*{
+  			margin:0px;
+  		}
+  	</style>
+  </head>
+
+  <body>
+  	
+    <table width="100%" height="100%" border="1">
+    	<tr>
+    		<td colspan="2" height="100" bgcolor="yellow">
+    		    <h2 align="center">${unit.unitName}</h2>
+    		</td>
+    	</tr>
+      <tr>
+        <td height="250" width="100%">
+            第一道题()
+            <br><form action="#" method="post">
+              <textarea style="width: 100%; height: 150px;" name="answer"></textarea>
+              <input type="button" name="" value="保存" onclick="addAnswer();" >
+            </form>
+        </td>
+      </tr>
+    </table>
+    <form action="left.jsp" onsubmit="return confirm('确定提交？\n（注意：提交后不可更改）');">
+               <input type="submit" name="" value="提交">
+       </form>
+  </body>
+  <script type="text/javascript">
+  	
+
+	var xmlHttp;
+  
+	 function creatXMLHttpRequest(){
+		if(window.ActiveXObject){
+			xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}else{
+			xmlHttp=new XMLHttpRequest();
+		}
+	 }
+	
+	function requestGet(){
+		
+		creatXMLHttpRequest();
+		var url="doAjaxProduct.jsp?productId=";
+		xmlHttp.onreadystatechange=handlerReadyStateChange;
+		xmlHttp.open("get",url,true);
+		xmlHttp.send(null);
+	}
+
+	function handlerReadyStateChange(){
+		//alert(xmlHttp.readyState);
+		if(xmlHttp.readyState==4){
+		//	alert(xmlHttp.status);
+			if(xmlHttp.status==200){
+			}
+		}
+	}
+    
+  </script>
+</html>

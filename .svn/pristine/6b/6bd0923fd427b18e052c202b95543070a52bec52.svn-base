@@ -1,0 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page import="com.pro.domain.Teacher"%>
+<%@page import="com.pro.domain.Student"%>
+<%
+	Student student = (Student)session.getAttribute("stu"); 
+	if(student==null){
+		response.sendRedirect(request.getContextPath()+"/stu/stuLogin.jsp");
+		return;
+	}
+%>

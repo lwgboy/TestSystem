@@ -1,0 +1,32 @@
+package com.pro.service;
+
+import java.sql.Connection;
+
+import com.pro.dao.UnitQuestionScoreDao;
+import com.pro.dao.UnitQuestionScoreDaoImpl;
+import com.pro.domain.UnitQuestionScore;
+import com.pro.util.DbHelper;
+
+public class UnitQuestionScoreServiceImpl implements UnitQuestionScoreService {
+
+	@Override
+	public void insertUnitQuestionScore(UnitQuestionScore unitQuestionScore) {
+		Connection conn = null;
+		
+		try {
+			conn = DbHelper.getConn();
+			UnitQuestionScoreDao unitQuestionScoreDao = new UnitQuestionScoreDaoImpl();
+			unitQuestionScoreDao.insertUnitQuestionScore(conn, unitQuestionScore);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				DbHelper.closeAll(conn);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
+}

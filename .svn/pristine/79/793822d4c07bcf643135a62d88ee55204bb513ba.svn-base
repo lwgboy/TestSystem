@@ -1,0 +1,9 @@
+package com.pro.service;
+
+import com.pro.domain.Unit;
+
+public interface UnitService {
+	
+	public void insertUnit(Unit unit);
+
+}

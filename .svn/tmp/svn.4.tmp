@@ -1,0 +1,15 @@
+package com.pro.service;
+
+import java.util.List;
+
+import com.pro.domain.Unit;
+import com.pro.util.PageModel;
+
+public interface UnitService {
+	
+	public void insertUnit(Unit unit);
+	public List<Unit> findAllUnit();
+	
+	public PageModel<Unit> findPageUnit(int currentPage,int pageSize);
+	public void deleteUnit(String unitId);
+}

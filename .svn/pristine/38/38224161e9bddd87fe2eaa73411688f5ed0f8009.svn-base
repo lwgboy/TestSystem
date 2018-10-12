@@ -1,0 +1,68 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<HTML>
+<HEAD>
+<TITLE>题目</TITLE>
+<META NAME="Generator" CONTENT="EditPlus">
+<META NAME="Author" CONTENT="">
+<META NAME="Keywords" CONTENT="">
+<META NAME="Description" CONTENT="">
+</HEAD>
+
+<BODY>
+	<br />
+	<a href="addCategory.jsp">添加题目</a>
+	<br />
+	<table width="100%" border="1">
+		<tr bgcolor="red" align="center">
+			<td>
+				题目编号
+			</td>
+			<td>
+				题目内容
+			</td>
+			<td>
+				操作
+			</td>
+		</tr>
+		
+		<tr >
+			<td align="center">
+				1
+			</td>
+			<td>
+				……………………………………
+			</td>
+			<td>
+				<a href="#">修改</a>/
+				<a href="#" onclick="return confirm('你真的要删除嘛？')">删除</a>
+			</td>
+		</tr>
+		<tr >
+			<td align="center">
+				2
+			</td>
+			<td>
+				……………………………………
+			</td>
+			<td>
+				<a href="#">修改</a>/
+				<a href="#" onclick="return confirm('你真的要删除嘛？')">删除</a>
+			</td>
+		</tr>
+		<tr >
+			<td align="center">
+				3
+			</td>
+			<td>
+				……………………………………
+			</td>
+			<td>
+				<a href="#">修改</a>/
+				<a href="#" onclick="return confirm('你真的要删除嘛？')">删除</a>
+			</td>
+		</tr>
+		
+	</table>
+</BODY>
+</HTML>

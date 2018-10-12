@@ -1,0 +1,15 @@
+package com.pro.dao;
+
+import java.sql.Connection;
+import java.util.List;
+import java.util.Map;
+
+import com.pro.domain.Question;
+import com.pro.domain.UnitQuestionScore;
+
+public interface UnitQuestionScoreDao {
+	
+	public void insertUnitQuestionScore(Connection conn,UnitQuestionScore unitQuestionScore)throws Exception;
+
+	public Map<String,Object> findUnitQuestionScore(Connection conn, String unitId) throws Exception;
+}

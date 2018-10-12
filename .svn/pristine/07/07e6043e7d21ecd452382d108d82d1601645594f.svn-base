@@ -1,0 +1,33 @@
+package com.pro.dao;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.pro.domain.Question;
+import com.pro.domain.UnitQuestion;
+
+public class UnitQuestionDaoImpl extends BaseDao implements UnitQuestionDao {
+
+	@Override
+	public void insertUnitQue(Connection conn, UnitQuestion unitQuestion) throws Exception {
+		String sql = "insert into unitQuestion(unitQuestionId,questionId,unitId) values(SeqId.NEXTVAL,?,?)";
+		Object[] param = {unitQuestion.getQuestionId(),unitQuestion.getUnitId()};
+		this.exeSql(conn, sql, param);
+	}
+
+	@Override
+	public List<Question> findUnitQuestion(Connection conn, String unitId) throws Exception {
+		String sql = "select * from unitquestion where unitId=?";
+		Object[] param = {unitId};
+		ResultSet rs = this.getRs(conn, sql, param);
+		List<Question> questionList = new ArrayList<Question>();
+		while(rs.next()){
+			Question question = new Question();
+			
+		}
+		return null;
+	}
+
+}

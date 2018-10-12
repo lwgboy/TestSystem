@@ -1,0 +1,32 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page import="com.pro.domain.Student"%>
+<%@page import="com.pro.service.StudentService"%>
+<%@page import="com.pro.service.StudentServiceImpl"%>
+<%@page import="com.pro.service.UnitService"%>
+<%@page import="com.pro.service.UnitServiceImpl"%>
+<%@page import="java.util.List"%>
+<%@page import="com.pro.domain.Unit"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.pro.domain.StuQuestionScore"%>
+<%@page import="com.alibaba.fastjson.JSON"%>
+<%@page import="com.pro.domain.Question"%>
+<%@page import="com.pro.service.StuQuestionScoreService"%>
+<%@page import="com.pro.service.StuQuestionScoreServiceImpl"%>
+ 
+<%
+	String stuQuestionScoreStr=new String(request.getParameter("sqv").getBytes("ISO-8859-1"),"UTF-8");
+	StuQuestionScore stuQuestionScore = JSON.parseObject(stuQuestionScoreStr,StuQuestionScore.class);
+	
+	StuQuestionScoreService stuQuestionScoreService = new StuQuestionScoreServiceImpl();
+	stuQuestionScoreService.addStuQS(stuQuestionScore);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+%>

@@ -1,0 +1,38 @@
+package com.pro.domain;
+
+public class Unit {
+
+	private String unitId;
+	private String unitName;
+	private int unitFlag;
+	public Unit(String unitId, String unitName, int unitFlag) {
+		super();
+		this.unitId = unitId;
+		this.unitName = unitName;
+		this.unitFlag = unitFlag;
+	}
+	public Unit() {   
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public String getUnitId() {
+		return unitId;
+	}
+	public void setUnitId(String unitId) {
+		this.unitId = unitId;
+	}
+	public String getUnitName() {
+		return unitName;
+	}
+	public void setUnitName(String unitName) {
+		this.unitName = unitName;
+	}
+	public int getUnitFlag() {
+		return unitFlag;
+	}
+	public void setUnitFlag(int unitFlag) {
+		this.unitFlag = unitFlag;
+	}
+	
+	
+}

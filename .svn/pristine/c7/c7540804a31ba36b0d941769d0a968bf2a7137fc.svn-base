@@ -1,0 +1,16 @@
+package com.pro.dao;
+
+import java.sql.Connection;
+
+import com.pro.domain.Unit;
+
+public class UnitDaoImpl extends BaseDao implements UnitDao {
+
+	@Override
+	public void insertUnit(Connection conn,Unit unit) throws Exception {
+		String sql  = "insert into unit(unitId,unitName,unitFlag) values(?,?,?)";
+		Object[] param = {unit.getUnitId(),unit.getUnitName(),unit.getUnitFlag()};
+		this.exeSql(conn, sql, param);	
+	}
+
+}

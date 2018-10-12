@@ -1,0 +1,135 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
+<%@page import="com.pro.domain.StuQuestionScore"%>
+<%@page import="com.pro.domain.Unit"%>
+<%@page import="com.pro.domain.Student"%>
+<html>
+<head>
+<title>批改试卷</title>
+</head>
+  <script type="text/javascript" src="js/json2.js"></script>
+<%
+	List<StuQuestionScore> stuQuestionScoreList = (List<StuQuestionScore>)request.getAttribute("stuQuestionScoreList");
+	Unit unit = (Unit)request.getAttribute("unit");
+	Student student = (Student)request.getAttribute("student");
+%>
+
+<body>
+	<table border="1" width="50%" align="center">
+		<tr align="center">
+			<td width="50%">
+				单元：&nbsp;<%=unit.getUnitName() %>
+			</td>
+			<td width="50%">
+				学生：&nbsp;<%=student.getStuId() %>&nbsp;&nbsp;<%=student.getStuName() %>
+				<input type="hidden" name="stuId" id="stuId" value="<%=student.getStuId() %>" />
+			</td>
+		</tr>
+	</table>
+<%
+	for(int i = 0;i<stuQuestionScoreList.size();i++){
+		StuQuestionScore stuQuestionScore = stuQuestionScoreList.get(i);
+%>
+	 <form action="#" method="post" name="frm" id="frm">
+		 <table width="70%" align="center">
+		 	<tr>
+		 		<td width="5%" bgcolor="red" align="center">
+		 			<%=stuQuestionScore.getQuestion().getQuestionId() %>
+		 			<input type="hidden" name="answerId" id="answerId<%=i %>" value="<%=stuQuestionScore.getAnswerId() %>" />
+		 		</td>
+		 		<td width="95%">
+		 			<%=stuQuestionScore.getQuestion().getQuestionValue() %>(<%=stuQuestionScore.getUnitQuestionScore() %>分)
+		 			<input type="hidden" name="unitQuestionScore" id="unitQuestionScore<%=i %>" value="<%=stuQuestionScore.getUnitQuestionScore() %>" />
+		 		</td>
+		 	</tr>
+		 	<tr>
+			 	<td colspan="2">
+			       <textarea style="width: 100%; height: 150px;" name="answerValue" readonly="readonly"><%=stuQuestionScore.getAnswerValue() %></textarea>
+			    </td>
+		    </tr>
+		    <tr>
+			 	<td colspan="2" align="center">
+			       	请输入此题得分：<input type="text" name="answerScore" id="answerScore<%=i %>" onblur="f(<%=i %>);" value="<%=stuQuestionScore.getAnswerScore() %>" />
+			    </td>
+		    </tr>
+	     </table>
+	     <br/><br/>
+     </form>
+<% 
+	}
+%>
+	<br/><br/><br/><br/>
+	<table align="center">
+		<tr align=center>
+			<td>
+				<input type="button" value="返回" onclick="history.go(-1);return false;" />
+			</td>
+		</tr>
+	</table>
+</body>
+
+<script type="text/javascript">
+	
+	var xmlHttp;
+	
+	function createXMLHttpRequest(){
+		if(window.ActiveXObject){
+			xmlHttp = new ActiveXObject("Microsoft.XMLHtp");
+		}else{
+			xmlHttp = new XMLHttpRequest();
+		}
+	}
+	
+	function formData(v,a){
+		//alert(v);
+		var answerId = document.getElementById("answerId"+a).value;
+		//alert(answerId);
+		//var answerScore = document.getElementById("answerScore"+v).value;
+		//alert(answerScore);
+  		var stuQuestionScore={
+  			"answerId":answerId,
+  			//"questionId":"0",
+  			//"stuId":"1",
+  			//"unitId":"1";
+  			//"answerValue":"1",
+  			"answerScore":v
+  			};
+  		var stuQuestionScoreStr="stuQuestionScore="+JSON.stringify(stuQuestionScore);
+  		//alert(stuQuestionScoreStr);
+  		return stuQuestionScoreStr;
+  	}
+	
+	function f(v){
+		var unitQuestionScore = document.getElementById("unitQuestionScore"+v).value;
+		var a = parseFloat(unitQuestionScore);
+		//alert(a);
+		var answerScore = document.getElementById("answerScore"+v).value;
+		//alert(answerScore);
+		var b = parseFloat(answerScore);
+		//alert(b);
+		if(b > a){
+			alert('本题得分输入错误！');
+			document.getElementById("answerScore"+v).focus();
+			document.getElementById("answerScore"+v).style.borderColor='red';
+			return;
+		}
+		
+		createXMLHttpRequest();
+		xmlHttp.open("post","doCorrectionAjax.jsp",true);
+		xmlHttp.onreadystatechange=readyStateChange;
+  		xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+  		//发送数据
+  		xmlHttp.send(formData(answerScore,v));
+	}
+	
+	function readyStateChange(){
+  		if(xmlHttp.readyState==4&&xmlHttp.status==200){
+  			//var info=xmlHttp.responseText;
+  			//alert(info);
+  		}
+  	}
+
+</script>
+
+</html>

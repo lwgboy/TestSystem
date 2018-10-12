@@ -1,0 +1,9 @@
+package com.pro.service;
+
+import com.pro.domain.UnitQuestionScore;
+
+public interface UnitQuestionScoreService {
+	
+	public void insertUnitQuestionScore(UnitQuestionScore unitQuestionScore);
+
+}

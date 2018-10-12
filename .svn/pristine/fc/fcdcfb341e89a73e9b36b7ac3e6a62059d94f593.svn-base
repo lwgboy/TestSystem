@@ -1,0 +1,319 @@
+<%@page import="com.pro.domain.Question"%>
+<%@page import="java.util.List"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+        <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<HTML>
+<HEAD>
+<TITLE>添加试卷</TITLE>
+<script type="text/javascript">
+//if(top.location!=self.location)top.location=self.location;
+</script>
+<script type="text/javascript">
+	var h=100;
+	window.onscroll=function(){
+		document.getElementById("pageModel").style.marginTop=h+document.body.scrollTop;
+	}
+	function f(){
+		document.getElementById('pageModel').style.display='none';
+	}
+</script>
+</HEAD>
+<style type="text/css">
+
+		#left{
+		width:44%;
+		height:auto;
+		position:absolute;
+		left:10px;
+		}
+		
+		#right{
+		width:44%;
+		height:auto;
+		position:absolute;
+		left:45%;
+		}
+		
+		span{
+		font-weight:bold;
+		font-size:20px
+		}
+		
+		#pageModel{
+			width:10%;
+			height:auto;
+			position:absolute;
+			right:1px;
+		}
+	</style>
+<BODY>
+
+<%
+	Date dt=new Date();
+	String unitId = dt.getTime()+"";
+%>
+	<form action="doAddUnit.jsp" method="post" target="_blank" onsubmit="return fJudge();">
+		<table width="720" align="center">
+		<tr height="40"  bgcolor="#D9D9D">
+			<td align="center" >
+				试卷编号
+			</td>
+			<td align="center">
+				<%=unitId %><input type="hidden" id="in1" name="unitId" readonly="readonly" value="<%=unitId %>">
+			</td>
+		</tr>
+			<tr height="40">
+				<td align="center" bgcolor="#D9D9D">
+					试卷名称
+				</td>
+				<td align="center">
+					<textarea id="unitName" style="width: 100%; height:100%;resize:none;font-size:15px; color:#F00;" name="unitName"></textarea>
+				</td>
+			</tr>
+		</table>
+		<div id="unit" style="border:1px solid white;height:1000;width:100%;">
+			<span>试卷</span><br/><br/>
+			<div id="left">
+				<div style="left:1px;width:49%;visibility:hidden" id="divBase" >
+				</div>
+			</div>
+			<%
+				Question question = new Question();
+				List<Question> questionList = (List<Question>)request.getAttribute("questionList");
+				for(int i = -1; i < questionList.size();){
+					
+			 %>
+			<div id="right"  class="pageDiv">
+			<span>题库</span><br/><br/>
+			
+				<%
+					for(int j= 0; j < 13 ; j++ ){
+				 %>
+			 	<%
+			 		i++;
+			 		if(i>questionList.size()-1){break;}
+			 		//if((i-1)<0){continue;}
+					 question = questionList.get(i);
+			 	 %>
+				<div style="height:auto" id="<%=question.getQuestionValue() %>">
+				<input type="text" name="queId" value="<%=question.getQuestionId() %>" style="width:25;height:25;border: 0px;outline:none;cursor: pointer;"readonly="readonly" />
+				<a href="#" no="<%=question.getQuestionId() %>" va="<%=question.getQuestionValue() %>" class="aQue" onclick="addQue(this);return false;">
+					<%=question.getQuestionValue() %>
+				</a>
+				<input type="hidden" name="oldScore" value="分值" onblur="getSum(this);"/>
+				<input type="hidden" name="oldQuestionId" value="<%=question.getQuestionId() %>" />
+				（出题老师：<%=question.getTeacher().getTeaName() %>）<br/><br/>
+				</div>
+				
+				<% } %>
+				
+			</div>
+			<% } %> 
+			
+					
+		<div id="pageModel">
+			<table align="center">
+				<tr>
+					<td><input type="button" value="首页" onclick="page(1);return false;"></td>
+				</tr>
+				<tr>
+					<td><input type="button" value="上一页" onclick="page(2);return false;"></td>
+				</tr>
+				<tr>
+					<td><input type="button" value="下一页" onclick="page(3);return false;"></td>
+				</tr>
+				<tr>
+					<td><input type="button" value="尾页" onclick="page(4);return false;"></td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="提交"></td>
+				</tr>
+				<tr>
+					<td>总分:<label id="total">&nbsp;</label><br/></td>
+				</tr>
+			</table>
+		</div>
+		</div>
+
+		</form>
+	
+</BODY>
+
+<SCRIPT LANGUAGE="JavaScript">
+	window.onload=function(){    
+	   	var pageDiv = ccgetElementsByClassName("pageDiv","div");
+	         
+ 	     for(var i =1; i<pageDiv.length;i++)    
+	    {    
+	         pageDiv[i].style.display='none';
+	    }    
+	}
+	
+	function page(v){
+		var pageDiv = ccgetElementsByClassName("pageDiv","div");
+		var i = 1;
+		//alert('l');
+		for(i =0; i<pageDiv.length;i++)    
+	    {    
+	         if(pageDiv[i].style.display!="none"){
+	         	break;
+	         }
+	    } 
+	   // alert(i);
+		switch(v){
+			case 1:pageDiv[i].style.display="none";pageDiv[0].style.display="block";break;
+			case 2:if(i-1<0){break;}pageDiv[i].style.display="none";pageDiv[i-1].style.display="block";break;
+			case 3:if(i+1>pageDiv.length-1){break;}pageDiv[i].style.display="none";pageDiv[i+1].style.display="block";break;
+			case 4:pageDiv[i].style.display="none";pageDiv[pageDiv.length-1].style.display="block";break;
+		}
+	}
+	
+	function ccgetElementsByClassName(className,tagName){
+		var ele=[],all=document.getElementsByTagName(tagName||"*");
+		for(var i=0;i<all.length;i++){
+		if(all[i].className==className){
+		ele[ele.length]=all[i];
+		  }
+		}
+		return ele;
+	}
+	
+	function addQue(cc){
+		var v = cc.getAttribute('no');
+		//alert(v);
+		var v2 = cc.getAttribute('va');
+		//alert(v2);
+		var que = document.getElementById(v2);
+		//alert(que.innerHTML);
+		var leftDiv = document.getElementById('left');
+		var rightDiv = document.getElementById('right');
+		var newDiv = document.createElement("div");
+		
+		
+		
+		var ooDiv = document.getElementById("divBase");
+		//alert(ooDiv.innerHTML);
+		ooDiv.innerHTML="1";
+		//alert(ooDiv.innerHTML);
+		var aList = leftDiv.getElementsByTagName('a');
+
+		//alert(deleteDiv.innerHTML);
+		
+		if(cc.className=="aQue"){
+		//alert('i');
+			for(var i=0; i < aList.length;i++){
+				//aList[i].className="unitQue";
+				if(aList[i].getAttribute('no')==v){
+					return;
+				}
+			}
+		}else{
+		var deleteDiv = document.getElementById(v); 
+		//alert(deleteDiv.innerHTML);
+			if(deleteDiv.id==v){
+				deleteDiv.parentNode.removeChild(deleteDiv);
+				return;
+			}
+		}
+		
+		newDiv.className = "new";
+		newDiv.id=v;
+		//alert(v);
+		newDiv.style.marginTop=10;
+		newDiv.innerHTML = "some thing";
+
+	    leftDiv.insertBefore(newDiv, ooDiv);
+		//alert(v);
+ 		newDiv.innerHTML = que.innerHTML;
+		
+		var inp = newDiv.getElementsByTagName('input');
+		var newA = newDiv.getElementsByTagName('a');
+		newA[0].className="unitQue";
+		inp[0].value=aList.length;
+		inp[1].setAttribute("type","text");
+		inp[1].style.width=50;
+		inp[1].style.height=25;
+		//inp[1].id=v;
+		inp[1].setAttribute("name", "score");
+		inp[2].id="questionId";
+		inp[2].setAttribute("name", "questionId");
+		
+		inp[1].onfocus = function(){
+        this.select()
+ 	   }
+ 	   inp[1].focus(); 
+	}
+	
+	function fJudge(){
+		var roleId=document.getElementById('unitName').value;
+		var score=document.getElementsByName('score');
+		var left=document.getElementById('divBase').innerHTML;
+		
+		var tt = /^[0-9]*$/;
+		//alert(left);
+		if(roleId==""||roleId==null){
+			alert('试卷名称不能为空');
+			document.getElementById('unitName').focus();
+			return false;
+		}
+		
+		for(var i=0; i < score.length;i++){
+			if(score[i].value=="分值"||score[i].value==null||score[i].value==""||score[i].value=="0"){
+				alert('请填入分数');
+				score[i].focus();
+				return false;
+			}
+			if(!tt.test(score[i].value)){
+				alert('分数必须为数字');
+				score[i].focus();
+				return false;
+			}
+			if(score[i].value>=100){
+				alert('题目分数必须100以内');
+				score[i].focus();
+				return false;
+			}
+		}
+		
+		if(left!="1"){
+			alert('试卷必须添加试题');
+			//document.getElementById('unitName').focus();
+			return false;
+		}
+		
+		return true;
+	}
+	
+	function getSum(v){
+		var score=document.getElementsByName('score');
+		var sum=0;
+		
+		
+		
+		for(var i=0; i < score.length;i++){
+			sum = sum + parseFloat(score[i].value);
+		}
+		//alert(sum);
+		
+		if(parseFloat(sum)>100){
+			alert('试卷总分必须100以内');
+			score[i].focus();
+			//return false;
+		}
+		document.getElementById("total").firstChild.nodeValue=parseFloat(sum);
+	}
+
+</SCRIPT>
+</HTML>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,44 @@
+package com.pro.domain;
+
+public class UnitQuestionScore {
+	
+	private int scoreId;
+	private int score;
+	private Unit unit;
+	private Question question;
+	public UnitQuestionScore() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public int getScoreId() {
+		return scoreId;
+	}
+	public void setScoreId(int scoreId) {
+		this.scoreId = scoreId;
+	}
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
+	public Unit getUnit() {
+		return unit;
+	}
+	public void setUnit(Unit unit) {
+		this.unit = unit;
+	}
+	public Question getQuestion() {
+		return question;
+	}
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+	public UnitQuestionScore(int scoreId, int score) {
+		super();
+		this.scoreId = scoreId;
+		this.score = score;
+	}
+	
+
+}

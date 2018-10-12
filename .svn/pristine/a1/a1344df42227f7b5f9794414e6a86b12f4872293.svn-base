@@ -1,0 +1,17 @@
+package com.pro.dao;
+
+import java.sql.Connection;
+
+import com.pro.domain.UnitQuestion;
+
+public class UnitQuestionDaoImpl extends BaseDao implements UnitQuestionDao {
+
+	@Override
+	public void insertUnitQue(Connection conn, UnitQuestion unitQuestion) throws Exception {
+		String sql = "insert into unitQuestion(unitQuestionId,questionId,unitId) values(SeqId.NEXTVAL,?,?)";
+		Object[] param = {unitQuestion.getUnitQuestionId(),unitQuestion.getQuestionId(),unitQuestion.getUnitId()};
+		this.exeSql(conn, sql, param);
+	}
+	
+
+}

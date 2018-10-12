@@ -1,0 +1,19 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page import="com.pro.domain.Student"%>
+<%@page import="com.pro.service.StudentService"%>
+<%@page import="com.pro.service.StudentServiceImpl"%>
+<%@page import="com.pro.service.UnitService"%>
+<%@page import="com.pro.service.UnitServiceImpl"%>
+<%@page import="java.util.List"%>
+<%@page import="com.pro.domain.Unit"%>
+ 
+<%
+	//2
+	UnitService unitService = new UnitServiceImpl();
+	List<Unit> unitList = unitService.findAllUnit();
+	request.setAttribute("unitList",unitList);
+	
+	//3
+	request.getRequestDispatcher("chooseUnit.jsp").forward(request,response);
+%>

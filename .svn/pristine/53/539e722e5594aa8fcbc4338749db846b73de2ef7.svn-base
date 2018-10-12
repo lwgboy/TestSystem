@@ -1,0 +1,49 @@
+package com.pro.dao;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.pro.domain.Question;
+import com.pro.domain.Teacher;
+import com.pro.domain.UnitQuestionScore;
+
+public class UnitQuestionScoreDaoImpl extends BaseDao implements UnitQuestionScoreDao {
+
+	@Override
+	public void insertUnitQuestionScore(Connection conn, UnitQuestionScore unitQuestionScore) throws Exception {
+		String sql = "insert into UnitQuestionScore(scoreId,unitId,questionId,score) values(SeqId.NEXTVAL,?,?,?)";
+		Object[] param = {unitQuestionScore.getUnitId(),unitQuestionScore.getQuestionId(),unitQuestionScore.getScore()};
+		this.exeSql(conn, sql, param);
+	}
+
+	@Override
+	public Map<String,Object> findUnitQuestionScore(Connection conn, String unitId) throws Exception {
+		String sql = "select * from unitquestionscore uq,question q,teacher t where uq.QUESTIONID=q.QUESTIONID and q.TEAID=t.TEAID and unitId=?";
+		Object[] param = {unitId};
+		ResultSet rs = this.getRs(conn, sql, param);
+		List<Question> questionList = new ArrayList<Question>();
+		List<UnitQuestionScore> scoreList = new ArrayList<UnitQuestionScore>();
+		Map<String,Object> maps = new HashMap<String,Object>(); 
+		while(rs.next()){
+			Question question = new Question();
+			UnitQuestionScore unitquestionscore = new UnitQuestionScore();
+			
+			question.setQuestionId(rs.getInt("questionId"));
+			question.setQuestionValue(rs.getString("questionValue"));
+			question.setTeacher(new Teacher(rs.getInt("teaId"),rs.getString("teaName")));
+			questionList.add(question);
+			
+			unitquestionscore.setScore(rs.getInt("score"));
+			scoreList.add(unitquestionscore);
+			
+			maps.put("questionList", questionList);
+			maps.put("scoreList", scoreList);
+		}
+		return maps;
+	}
+
+}

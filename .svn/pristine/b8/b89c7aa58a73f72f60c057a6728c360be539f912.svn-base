@@ -1,0 +1,11 @@
+package com.pro.dao;
+
+import java.sql.Connection;
+
+import com.pro.domain.UnitQuestionScore;
+
+public interface UnitQuestionScoreDao {
+	
+	public void insertUnitQuestionScore(Connection conn,UnitQuestionScore unitQuestionScore)throws Exception;
+
+}

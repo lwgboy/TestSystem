@@ -1,0 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h2>你已答过题，请勿重复答题！！！</h2>
+</body>
+</html>

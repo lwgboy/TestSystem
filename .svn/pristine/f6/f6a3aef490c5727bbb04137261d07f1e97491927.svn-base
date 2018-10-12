@@ -1,0 +1,19 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+ 
+<%
+	String stuQuestionScoreStr=new String(request.getParameter("sqv").getBytes("ISO-8859-1"),"UTF-8");
+	StuQuestionScore stuQuestionScore = JSON.parseObject(stuQuestionScoreStr,StuQuestionScore.class);
+
+	String questionId = request.getParameter("questionId");
+	String answerValue = request.getParameter("answerValue");
+	String stuId = request.getParameter("stuId");
+	String unitId = request.getParameter("unitId");
+	stuQuestionScore.setQuestion(new Question(Integer.parseInt(questionId)));
+	stuQuestionScore.setAnswerValue(answerValue);
+	stuQuestionScore.setStudent(new Student(stuId));
+	stuQuestionScore.setUnit(new Unit(unitId));
+
+	
+	
+%>

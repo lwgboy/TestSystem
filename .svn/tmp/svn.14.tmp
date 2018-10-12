@@ -1,0 +1,102 @@
+package com.pro.dao;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.pro.domain.Question;
+import com.pro.domain.StuQuestionScore;
+import com.pro.domain.UnitQuestion;
+import com.pro.util.PageModel;
+
+public class StuQuestionScoreDaoImpl extends BaseDao implements StuQuestionScoreDao{
+
+	@Override
+	public void addStuQS(Connection conn, StuQuestionScore sqs)
+			throws Exception {
+
+		String sql = "insert into STUQUESTIONSCORE(ANSWERID,ANSWERVALUE,UNITID,QUESTIONID,STUID) values(SeqId.NEXTVAL,?,?,?,?)";
+		Object param[] = {sqs.getAnswerValue(),sqs.getUnitId(),sqs.getQuestionId(),sqs.getStuId()};
+		this.exeSql(conn, sql, param);
+	}
+
+	@Override
+	public List<StuQuestionScoreDao> findStuQSAll(Connection conn,
+			StuQuestionScore sqs) throws Exception {
+		
+		return null;
+	}
+
+	@Override
+	public PageModel<StuQuestionScoreDao> findStuQSPage(Connection conn,
+			StuQuestionScore sqs) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateStuQS(Connection conn, StuQuestionScore sqs)
+			throws Exception {
+		
+		String sql = "update STUQUESTIONSCORE set ANSWERSCORE=? where ANSWERID=?;";
+		Object param[] = {sqs.getAnswerScore(),sqs.getAnswerId()};
+		this.exeSql(conn, sql, param);
+	}
+
+	/*
+	 *用于 STUID和UNITID作为条件 查找StuQuestionScore
+	 *返回不为空的话
+	 *就说明STUID已经答过题
+	 */
+	@Override
+	public StuQuestionScore findStuQSSingle(Connection conn,
+			StuQuestionScore sqs) throws Exception {
+		
+		String sql = "select * from STUQUESTIONSCORE where STUID=?";
+		Object param [] = {sqs.getStudent().getStuId()};
+		ResultSet rs = this.getRs(conn, sql, param);
+		StuQuestionScore sq = null;
+		if(rs.next()){
+			sq = new StuQuestionScore();
+			sq.setAnswerId(rs.getInt("ANSWERID"));
+		}
+		return sq;
+	}
+
+	@Override
+	public List<StuQuestionScore> getStuQuestionScoreList(Connection conn,
+			String unitId, String stuId) throws Exception {
+		String sql ="select * from unitQuestion where unitId=?";
+		Object param [] = {unitId};
+		ResultSet rs = this.getRs(conn, sql, param);
+		List<UnitQuestion> unitQuestionList = new ArrayList<UnitQuestion>();
+		while(rs.next()){
+			UnitQuestion unitQuestion = new UnitQuestion();
+			unitQuestion.setUnitQuestionId(rs.getInt("unitQuestionId"));
+			unitQuestion.setUnitId(rs.getString("unitId"));
+			unitQuestion.setQuestionId(rs.getInt("questionId"));
+			unitQuestionList.add(unitQuestion);
+		}
+		
+		List<StuQuestionScore> stuQuestionScoreList = new ArrayList<StuQuestionScore>();
+		
+		for(int i = 0; i < unitQuestionList.size();i++){
+			UnitQuestion unitQuestion1 = unitQuestionList.get(i);
+			sql = "select sqs.ANSWERID,sqs.ANSWERVALUE,sqs.QUESTIONID,q.QUESTIONVALUE,uqs.SCORE from STUQUESTIONSCORE sqs,question q,unitQuestionScore uqs where sqs.unitId=? and sqs.stuId=? and sqs.questionId=? and q.QUESTIONID=sqs.QUESTIONID and uqs.QUESTIONID=sqs.QUESTIONID and uqs.UNITID=sqs.UNITID";
+			Object param1 [] = {unitId,stuId,unitQuestion1.getQuestionId()};
+			ResultSet rs1 = this.getRs(conn, sql, param1);
+			StuQuestionScore stuQuestionScore = new StuQuestionScore();
+			if(rs1.next()){
+				stuQuestionScore.setAnswerId(rs.getInt("answerId"));
+				stuQuestionScore.setQuestion(new Question(rs.getInt("questionId"),rs.getString("questionValue")));
+				stuQuestionScore.setUnitQuestionScore(rs.getInt("score"));
+			}
+			stuQuestionScoreList.add(stuQuestionScore);
+		}
+		
+		return stuQuestionScoreList;
+	}
+
+	
+}

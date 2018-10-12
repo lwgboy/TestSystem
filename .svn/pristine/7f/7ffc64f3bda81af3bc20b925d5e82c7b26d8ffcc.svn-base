@@ -1,0 +1,13 @@
+package com.pro.dao;
+
+import java.sql.Connection;
+import java.util.List;
+
+import com.pro.domain.Unit;
+
+public interface UnitDao {
+	
+	public void insertUnit(Connection conn,Unit unit)throws Exception;
+	public List<Unit> findAllUnit(Connection conn)throws Exception;
+
+}

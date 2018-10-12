@@ -1,0 +1,10 @@
+package com.pro.service;
+
+import com.pro.domain.StuQuestionScore;
+
+public interface StuQuestionScoreService {
+
+	public void addStuQS(StuQuestionScore sqs);
+	public void updateStuQS(StuQuestionScore sqs);
+	public StuQuestionScore findStuQSSingle(StuQuestionScore sqs);
+}

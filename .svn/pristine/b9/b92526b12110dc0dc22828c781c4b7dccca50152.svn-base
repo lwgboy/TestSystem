@@ -1,0 +1,11 @@
+package com.pro.dao;
+
+import java.sql.Connection;
+
+import com.pro.domain.Unit;
+
+public interface UnitDao {
+	
+	public void insertUnit(Connection conn,Unit unit)throws Exception;
+
+}

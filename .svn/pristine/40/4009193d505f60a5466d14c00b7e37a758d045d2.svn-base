@@ -1,0 +1,31 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<form action="test.jsp" method="post">
+	<table align="center">
+		<tr>
+			<td>
+				请选择：
+				<select name="">
+					<option value="unitID">第一套</option>
+					<option value="unitID">第二套</option>
+					<option value="unitID">第三套</option>
+					<option value="unitID">第四套</option>
+					<option value="unitID">第五套</option>
+					<option value="unitID">第六套</option>
+					<option value="unitID">第七套</option>
+					<option value="unitID">第八套</option>				
+				</select>
+				<input type="submit" value="确定" >
+			</td>
+		</tr>
+	</table>
+	
+	</form>
+</body>
+</html>

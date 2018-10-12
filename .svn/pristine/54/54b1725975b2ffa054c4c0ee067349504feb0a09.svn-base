@@ -1,0 +1,23 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page import="com.pro.domain.Student"%>
+<%@page import="com.pro.service.StudentService"%>
+<%@page import="com.pro.service.StudentServiceImpl"%>
+<%@page import="com.pro.domain.StuQuestionScore"%>
+<%@page import="com.pro.domain.Question"%>
+<%@page import="com.pro.domain.Unit"%>
+ 
+<%
+	String questionId = request.getParameter("questionId");
+	String answerValue = request.getParameter("answerValue");
+	String stuId = request.getParameter("stuId");
+	String unitId = request.getParameter("unitId");
+	StuQuestionScore stuQuestionScore = new StuQuestionScore();
+	stuQuestionScore.setQuestion(new Question(Integer.parseInt(questionId)));
+	stuQuestionScore.setAnswerValue(answerValue);
+	stuQuestionScore.setStudent(new Student(stuId));
+	stuQuestionScore.setUnit(new Unit(unitId));
+
+	
+	
+%>

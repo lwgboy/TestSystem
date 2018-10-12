@@ -1,0 +1,82 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>题目列表</TITLE>
+
+</HEAD>
+
+<BODY>
+	<table border="1" width="800">
+		<tr>
+			<td width="10%" align="center">
+				题目编号
+			</td>
+			<td width="90%" align="center">
+				题目名称
+			</td>
+		</tr>
+		<tr>
+			<td width="10%" align="center">
+				1
+			</td>
+			<td width="90%">
+				<a href="#" no="1" onclick="fc(this);return false;">……………………………………</a>
+			</td>
+		</tr>
+		<tr>
+			<td width="10%" align="center">
+				2
+			</td>
+			<td width="90%">
+				<a href="#" no="2" onclick="fc(this);return false;">……………………………………</a>
+			</td>
+		</tr>
+		<tr>
+			<td width="10%" align="center">
+				3
+			</td>
+			<td width="90%">
+				<a href="#" no="3" onclick="fc(this);return false;">……………………………………</a>
+			</td>
+		</tr>
+	</table>
+</BODY>
+
+<SCRIPT LANGUAGE="JavaScript">
+	function fc(v){
+		
+		
+		var parWin=window.parent.dialogArguments;
+		var tb=parWin.document.getElementById("tb");
+		for(var i=0; i<tb.rows.length;i++){
+			if(tb.rows[i].cells[0].firstChild.nodeValue==v.getAttribute("no")){
+				 alert('该题目已经添加！');
+				 return;
+			}
+		}
+
+		var row_=tb.insertRow();
+
+		var cell_1=row_.insertCell(0);
+		cell_1.innerHTML=v.getAttribute("no")+'<input type="hidden" name="productId" id="productId" value="'+v.getAttribute("no")+'" />';
+		cell_1.width="10%";
+
+		var cell_2=row_.insertCell(1);
+		cell_2.innerHTML=v.firstChild.nodeValue;
+		cell_2.width="70%";
+
+		var cell_3=row_.insertCell(2);
+		cell_3.innerHTML='<input type="text" name="score" size="20" value="0" onblur="getSum();"/>';
+		cell_3.width="10%";
+
+		var cell_4=row_.insertCell(3);
+		cell_4.innerHTML='<a href="#" onclick="remove(this)">移除</a>';
+		cell_4.width="10%";
+		
+		parWin.getSum();
+	}
+</SCRIPT>
+
+</HTML>

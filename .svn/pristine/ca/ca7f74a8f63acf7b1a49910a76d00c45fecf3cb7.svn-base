@@ -1,0 +1,41 @@
+package com.pro.domain;
+
+public class UnitQuestion {
+	
+	private int unitQuestionId;
+	private Question question;
+	private Unit unit;
+	public int getUnitQuestionId() {
+		return unitQuestionId;
+	}
+	public void setUnitQuestionId(int unitQuestionId) {
+		this.unitQuestionId = unitQuestionId;
+	}
+	public Question getQuestion() {
+		return question;
+	}
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+	public Unit getUnit() {
+		return unit;
+	}
+	public void setUnit(Unit unit) {
+		this.unit = unit;
+	}
+	public UnitQuestion() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public UnitQuestion(int unitQuestionId, Question question, Unit unit) {
+		super();
+		this.unitQuestionId = unitQuestionId;
+		this.question = question;
+		this.unit = unit;
+	}
+	public UnitQuestion(int unitQuestionId) {
+		super();
+		this.unitQuestionId = unitQuestionId;
+	}
+	
+}

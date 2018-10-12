@@ -1,0 +1,9 @@
+package com.pro.service;
+
+import com.pro.domain.UnitQuestion;
+
+public interface UnitQuestionService {
+	
+	public void insertUnitQuestion(UnitQuestion unitQuestion);
+
+}

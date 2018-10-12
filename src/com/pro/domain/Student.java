@@ -1,0 +1,57 @@
+package com.pro.domain;
+
+public class Student {
+	
+	private String stuId;
+	private String stuName;
+	private String stuPwd;
+	
+
+	private int totalScore;
+	
+	public int getTotalScore() {
+		return totalScore;
+	}
+	public void setTotalScore(int totalScore) {
+		this.totalScore = totalScore;
+	}
+	
+	public Student() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public String getStuId() {
+		return stuId;
+	}
+	public void setStuId(String stuId) {
+		this.stuId = stuId;
+	}
+	public String getStuName() {
+		return stuName;
+	}
+	public void setStuName(String stuName) {
+		this.stuName = stuName;
+	}
+	public String getStuPwd() {
+		return stuPwd;
+	}
+	public void setStuPwd(String stuPwd) {
+		this.stuPwd = stuPwd;
+	}
+	public Student(String stuId, String stuName, String stuPwd) {
+		super();
+		this.stuId = stuId;
+		this.stuName = stuName;
+		this.stuPwd = stuPwd;
+	}
+	public Student(String stuId, String stuName) {
+		super();
+		this.stuId = stuId;
+		this.stuName = stuName;
+	}
+	public Student(String stuId) {
+		super();
+		this.stuId = stuId;
+	}
+
+}
